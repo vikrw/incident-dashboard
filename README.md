@@ -1,12 +1,6 @@
 # Incident Dashboard UI
 
-This is a modern, high-performance Incident Dashboard built with **Angular 21** and **Tailwind CSS**. It is designed to manage system anomalies at scale with premium UX, robust state management, and optimized rendering behaviors.
-
-This repository is organized into two primary branches depending on the target dataset scale:
-* **`feature-large-data`**: Configured to manage large datasets with advanced performance optimizations (such as server-side pagination, debounced filtering, and infinite virtual scrolling).
-* **`feature-small-data`**: Configured as a lightweight dashboard with minimal datasets for simpler testing.
-
----
+This is a modern, high-performance Incident Dashboard built with **Angular 21**, **@Ngrx/signal** and **Tailwind CSS**. It is designed to manage system anomalies at scale with premium UX, robust state management, and optimized rendering behaviors.
 
 ## Key Features
 
