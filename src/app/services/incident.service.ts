@@ -1,8 +1,10 @@
 import { Injectable, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { delay } from 'rxjs/operators';
 import { Incident, IncidentStatus } from '../models/incident.model';
+import { IncidentFilter } from '../models/incident-filter.model';
+import { PaginatedResponse } from '../models/paginated-response.model';
 
 @Injectable({
   providedIn: 'root'
@@ -12,11 +14,34 @@ export class IncidentService {
   private apiUrl = 'http://localhost:3000/incidents';
 
   /**
-   * Fetches all incidents from json-server with an artificial RxJS delay.
+   * Fetches paginated and filtered incidents from json-server with an artificial RxJS delay.
    */
-  getIncidents(): Observable<Incident[]> {
-    return this.http.get<Incident[]>(this.apiUrl).pipe(
-      delay(800) // Simulate network delay
+  getIncidents(filters: IncidentFilter, page: number, limit = 50): Observable<PaginatedResponse<Incident>> {
+    let params = new HttpParams()
+      .set('_page', page.toString())
+      .set('_per_page', limit.toString());
+
+    if (filters.status) {
+      params = params.set('status', filters.status);
+    }
+    if (filters.severity) {
+      params = params.set('severity', filters.severity);
+    }
+    if (filters.service) {
+      params = params.set('service', filters.service);
+    }
+    if (filters.searchTerm) {
+      const searchObj = {
+        or: [
+          { title: { contains: filters.searchTerm } },
+          { id: { contains: filters.searchTerm } }
+        ]
+      };
+      params = params.set('_where', JSON.stringify(searchObj));
+    }
+
+    return this.http.get<PaginatedResponse<Incident>>(this.apiUrl, { params }).pipe(
+      delay(600) // Simulate network delay
     );
   }
 

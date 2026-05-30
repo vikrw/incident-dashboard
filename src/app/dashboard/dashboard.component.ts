@@ -1,6 +1,7 @@
 import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IncidentStore, IncidentFilter } from '../store/incident.store';
+import { IncidentStore } from '../store/incident.store';
+import { IncidentFilter } from '../models/incident-filter.model';
 import { FiltersComponent } from '../components/filters/filters.component';
 import { IncidentListComponent } from '../components/incident-list/incident-list.component';
 import { IncidentDetailsComponent } from '../components/incident-details/incident-details.component';

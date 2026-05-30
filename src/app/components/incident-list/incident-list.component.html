@@ -2,7 +2,7 @@
   <!-- Loading State -->
   @if (isLoading()) {
     <div class="p-8 flex flex-col items-center justify-center text-slate-400 space-y-4" aria-live="polite">
-      <svg class="animate-spin h-8 w-8 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+      <svg class="animate-spin h-8 w-8 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
       </svg>
@@ -13,7 +13,7 @@
   <!-- Error State -->
   @if (error()) {
     <div class="p-8 flex flex-col items-center justify-center text-red-400 space-y-4 text-center">
-      <svg class="h-12 w-12 text-red-500/50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <svg class="h-12 w-12 text-red-500/50" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" focusable="false">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
       </svg>
       <div>
@@ -31,7 +31,7 @@
   <!-- Empty State -->
   @if (!isLoading() && !error() && incidents().length === 0) {
     <div class="p-12 flex flex-col items-center justify-center text-slate-400 space-y-4">
-      <svg class="h-16 w-16 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <svg class="h-16 w-16 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" focusable="false">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
       </svg>
       <p class="text-lg font-medium">No incidents found</p>
@@ -41,41 +41,56 @@
 
   <!-- Data State -->
   @if (!isLoading() && !error() && incidents().length > 0) {
-    <ul class="divide-y divide-slate-700/50">
-      @for (incident of incidents(); track incident.id) {
-        <li>
-          <button 
-            class="w-full text-left p-4 hover:bg-slate-700/30 transition-colors focus:outline-none focus:bg-slate-700/30 group cursor-pointer"
-            [class.bg-slate-700.bg-opacity-40]="selectedId() === incident.id"
-            (click)="selectIncident.emit(incident.id)">
-            
-            <div class="flex justify-between items-start mb-2">
-              <div class="flex items-center gap-3">
-                <span class="text-xs font-mono text-slate-400 group-hover:text-slate-300">{{ incident.id }}</span>
-                <h3 class="font-semibold text-slate-100 group-hover:text-white transition-colors truncate max-w-[200px] sm:max-w-md">
-                  {{ incident.title }}
-                </h3>
-              </div>
-              <span 
-                class="text-xs px-2.5 py-1 rounded-full font-medium"
-                [ngClass]="getSeverityClass(incident.severity)">
-                {{ incident.severity }}
-              </span>
-            </div>
+    <!-- Screen reader live region to announce incident counts -->
+    <div class="sr-only" aria-live="polite">
+      Showing {{ incidents().length }} incidents.
+    </div>
 
-            <div class="flex items-center justify-between text-sm text-slate-400 mt-3">
-              <div class="flex items-center gap-4">
-                <span class="flex items-center gap-1.5">
-                  <span class="w-2 h-2 rounded-full" [ngClass]="getStatusDotClass(incident.status)"></span>
-                  {{ incident.status }}
-                </span>
-                <span class="hidden sm:inline-block border-l border-slate-600 pl-4">{{ incident.service }}</span>
-              </div>
-              <span class="text-xs">{{ incident.createdAt | date:'MMM d, HH:mm' }}</span>
+    <cdk-virtual-scroll-viewport 
+      itemSize="92" 
+      class="h-[600px] w-full overflow-y-auto"
+      role="list"
+      aria-label="List of system incidents"
+      (scrolledIndexChange)="onScrollIndexChange($event)">
+      
+      <div 
+        *cdkVirtualFor="let incident of incidents(); let i = index; trackBy: trackById"
+        role="listitem"
+        [attr.aria-posinset]="i + 1"
+        [attr.aria-setsize]="incidents().length"
+        class="border-b border-slate-700/50 last:border-b-0">
+        
+        <button 
+          class="w-full text-left p-4 hover:bg-slate-700/30 transition-colors focus:outline-none focus:bg-slate-700/30 group cursor-pointer"
+          [class.bg-slate-700.bg-opacity-40]="selectedId() === incident.id"
+          (click)="selectIncident.emit(incident.id)">
+          
+          <div class="flex justify-between items-start mb-2">
+            <div class="flex items-center gap-3">
+              <span class="text-xs font-mono text-slate-400 group-hover:text-slate-300">{{ incident.id }}</span>
+              <h3 class="font-semibold text-slate-100 group-hover:text-white transition-colors truncate max-w-[200px] sm:max-w-md">
+                {{ incident.title }}
+              </h3>
             </div>
-          </button>
-        </li>
-      }
-    </ul>
+            <span 
+              class="text-xs px-2.5 py-1 rounded-full font-medium"
+              [ngClass]="incident.severity | severityClass">
+              {{ incident.severity }}
+            </span>
+          </div>
+
+          <div class="flex items-center justify-between text-sm text-slate-400 mt-3">
+            <div class="flex items-center gap-4">
+              <span class="flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full" [ngClass]="incident.status | statusDotClass"></span>
+                {{ incident.status }}
+              </span>
+              <span class="hidden sm:inline-block border-l border-slate-600 pl-4">{{ incident.service }}</span>
+            </div>
+            <span class="text-xs">{{ incident.createdAt | date:'MMM d, HH:mm' }}</span>
+          </div>
+        </button>
+      </div>
+    </cdk-virtual-scroll-viewport>
   }
 </div>

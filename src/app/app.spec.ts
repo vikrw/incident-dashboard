@@ -10,7 +10,7 @@ describe('App', () => {
 
   beforeEach(async () => {
     mockIncidentService = {
-      getIncidents: jest.fn().mockReturnValue(of([])),
+      getIncidents: jest.fn().mockReturnValue(of({ data: [], next: null })),
       updateIncidentStatus: jest.fn().mockReturnValue(of({}))
     };
 

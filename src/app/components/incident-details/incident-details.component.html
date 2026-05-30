@@ -1,7 +1,7 @@
 <div class="bg-slate-800/80 backdrop-blur-md border border-slate-700/50 rounded-xl overflow-hidden shadow-2xl h-full flex flex-col">
   @if (!incident()) {
     <div class="flex-1 flex flex-col items-center justify-center p-12 text-slate-400">
-      <svg class="h-16 w-16 text-slate-600 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <svg class="h-16 w-16 text-slate-600 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" focusable="false">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
       </svg>
       <p class="text-lg font-medium">No Incident Selected</p>
@@ -19,7 +19,7 @@
           (click)="close.emit()" 
           class="text-slate-400 hover:text-white p-2 hover:bg-slate-700 rounded-full transition-colors lg:hidden cursor-pointer"
           aria-label="Close details">
-          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" focusable="false">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
