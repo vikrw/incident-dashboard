@@ -1,0 +1,42 @@
+<div class="fixed top-5 right-5 z-[9999] flex flex-col gap-3 max-w-sm w-full pointer-events-none">
+  @for (toast of toastService.toasts(); track toast.id) {
+    <div 
+      class="pointer-events-auto flex items-center gap-3 p-4 rounded-xl shadow-2xl border backdrop-blur-md transition-all duration-300 transform translate-y-0 scale-100 animate-slide-in"
+      [ngClass]="{
+        'bg-emerald-950/90 border-emerald-500/30 text-emerald-200': toast.type === 'success',
+        'bg-rose-950/90 border-rose-500/30 text-rose-200': toast.type === 'error',
+        'bg-slate-900/90 border-slate-700/30 text-slate-200': toast.type === 'info'
+      }"
+      role="alert">
+      
+      <!-- Icon -->
+      <div 
+        class="p-1 rounded-lg shrink-0"
+        [ngClass]="{
+          'bg-emerald-500/20 text-emerald-400': toast.type === 'success',
+          'bg-rose-500/20 text-rose-400': toast.type === 'error',
+          'bg-blue-500/20 text-blue-400': toast.type === 'info'
+        }">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" [attr.d]="getIconPath(toast.type)" />
+        </svg>
+      </div>
+
+      <!-- Message -->
+      <div class="flex-1 text-sm font-medium leading-tight">
+        {{ toast.message }}
+      </div>
+
+      <!-- Close Button -->
+      <button 
+        (click)="toastService.remove(toast.id)"
+        class="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-white/5 transition-colors cursor-pointer"
+        aria-label="Close Notification">
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+
+    </div>
+  }
+</div>

@@ -1,0 +1,55 @@
+{
+  "incidents": [
+    {
+      "id": "INC-1001",
+      "title": "Database connection timeout in production",
+      "description": "The primary PostgreSQL cluster is intermittently dropping connections, causing API failures.",
+      "status": "Open",
+      "severity": "Critical",
+      "service": "Database API",
+      "createdAt": "2026-05-29T13:18:00.000Z",
+      "updatedAt": "2026-05-30T10:04:19.914Z"
+    },
+    {
+      "id": "INC-1002",
+      "title": "High latency on authentication service",
+      "description": "Users are experiencing up to 5 second delays when logging in.",
+      "status": "In Progress",
+      "severity": "High",
+      "service": "Auth Service",
+      "createdAt": "2026-05-28T15:18:00.000Z",
+      "updatedAt": "2026-05-28T15:30:00.000Z"
+    },
+    {
+      "id": "INC-1003",
+      "title": "Missing localized strings in user profile",
+      "description": "Spanish locale is falling back to English for new features.",
+      "status": "Resolved",
+      "severity": "Low",
+      "service": "Frontend",
+      "createdAt": "2026-05-27T15:18:00.000Z",
+      "updatedAt": "2026-05-28T10:18:00.000Z"
+    },
+    {
+      "id": "INC-1004",
+      "title": "Payment gateway failing for MasterCard",
+      "description": "A recent deploy might have broken the payload structure sent to Stripe for MasterCard.",
+      "status": "Open",
+      "severity": "Critical",
+      "service": "Payment Service",
+      "createdAt": "2026-05-29T14:48:00.000Z",
+      "updatedAt": "2026-05-29T14:48:00.000Z"
+    },
+    {
+      "id": "INC-1005",
+      "title": "Memory leak in worker nodes",
+      "description": "Background job processing nodes are restarting frequently due to OOM errors.",
+      "status": "In Progress",
+      "severity": "Medium",
+      "service": "Worker Pool",
+      "createdAt": "2026-05-29T10:18:00.000Z",
+      "updatedAt": "2026-05-29T11:18:00.000Z"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}

@@ -1,0 +1,45 @@
+{
+  "name": "incident-dashboard",
+  "version": "0.0.0",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development",
+    "test": "jest",
+    "server": "json-server --watch db.json --port 3000"
+  },
+  "private": true,
+  "packageManager": "npm@6.14.18",
+  "dependencies": {
+    "@angular/common": "^21.2.0",
+    "@angular/compiler": "^21.2.0",
+    "@angular/core": "^21.2.0",
+    "@angular/forms": "^21.2.0",
+    "@angular/platform-browser": "^21.2.0",
+    "@angular/router": "^21.2.0",
+    "@ngrx/signals": "^21.1.0",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0"
+  },
+  "devDependencies": {
+    "@angular/build": "^21.2.13",
+    "@angular/cli": "^21.2.13",
+    "@angular/compiler-cli": "^21.2.0",
+    "@angular/platform-browser-dynamic": "^21.2.15",
+    "@tailwindcss/postcss": "^4.3.0",
+    "@types/jest": "^30.0.0",
+    "autoprefixer": "^10.5.0",
+    "jest": "^30.4.2",
+    "jest-environment-jsdom": "^30.4.1",
+    "jest-preset-angular": "^16.1.5",
+    "jsdom": "^28.0.0",
+    "json-server": "^1.0.0-beta.15",
+    "postcss": "^8.5.15",
+    "prettier": "^3.8.1",
+    "tailwindcss": "^4.3.0",
+    "typescript": "~5.9.2",
+    "vitest": "^4.0.8",
+    "zone.js": "^0.16.2"
+  }
+}
